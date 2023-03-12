@@ -1,0 +1,97 @@
+.footer {
+  background: rgba(0,0,0,.1);
+  width: 100vw;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & > p {
+    color: rgba(255,255,255,.5);
+    text-align: center;
+  }
+  & > a, & > button {
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+    background: rgba(255,255,255,.05);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: .3rem;
+    color: rgba(255,255,255,.1);
+    &:hover {
+      color: white;
+      border-color: rgba(255,255,255,.5);
+      box-shadow: 0 0 10px rgba(255,255,255,.5);
+    }
+  }
+}
+
+.modal {
+  position: fixed;
+  display: flex;
+  min-width: 100vw;
+  min-height: 100vh;
+  background: #1a1e25;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  overflow: hidden;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    min-width: 100%;
+    background: rgba(255,255,255,.1);
+    align-items: center;
+
+    h1 {
+      text-align: center;
+      color: white;
+    }
+
+    .close {
+      cursor: pointer;
+      background: #803232;
+      color: #a9a9a9;
+      padding: 10px;
+
+      &:hover {
+        background: #a43434;
+        color: #f5f5f5;
+      }
+    }
+  }
+
+  .content {
+    width: 95%;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 10px;
+    background: rgba(255,255,255,.05);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow: scroll;
+    min-height: 1000px;
+
+    .paragraph {
+      & > h1 {
+        color: white;
+        font-size: 2rem;
+        margin-top: .5rem;
+        margin-bottom: .5rem;
+      }
+      .text {
+        background: rgba(0,0,0,0.1);
+        padding: .5rem;
+        border-radius: 5px;
+
+        & > p {
+          color: whitesmoke;
+          margin: 5px;
+        }
+      }
+    }
+  }
+}
