@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import cls from './Page.module.scss'
 import {Link, Navigate} from "react-router-dom";
-import BACKENDURLS from "../auth/BACKENDURLS";
+import BACKENDURLS from "../auth/BACKEND_ENDPOINTS";
 import useCookie from "../hooks/useCookie";
 import useStorage from "../hooks/useStorage";
 import request from "../scripts/request";
+import cookieNames from "../constants/cookieNames";
 
 
 const Index = () => {
@@ -14,7 +15,6 @@ const Index = () => {
     const form_title = 'Авторизация';
     const register_text = 'Регистрация';
 
-
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [authOk, setAuthOk] = useState(false);
@@ -22,6 +22,7 @@ const Index = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [response, setResponse] = useState({});
     const [error, setError] = useState(null);
+    const [redirectToAfterAuth, setRedirectToAfterAuth] = useState('/');
 
     const login = async (e) => {
         e.preventDefault();
@@ -31,13 +32,16 @@ const Index = () => {
     }
 
     useEffect(()=>{
-        console.log('response.data =', response?.data);
+        const url_before_auth = useCookie.get(cookieNames.url_before_auth);
+        if (url_before_auth) {
+            setRedirectToAfterAuth(url_before_auth);
+            useCookie.remove(cookieNames.url_before_auth);
+        }
+    }, [])
 
+    useEffect(()=>{
         if (response.data) {
             const {accessToken, refreshToken} = response.data;
-
-            console.log(accessToken, refreshToken);
-            console.log(useCookie, useStorage);
 
             useCookie.set("accessToken", accessToken, useCookie.getExpTime(accessToken));
             useStorage.set("refreshToken", refreshToken, useCookie.getExpTime(refreshToken));
@@ -55,7 +59,7 @@ const Index = () => {
     }, [error])
 
     if (authOk)
-        return <Navigate to={'/'}/>
+        return <Navigate to={redirectToAfterAuth}/>
 
     else return (
         <div className={cls.auth_content} onSubmit={login}>

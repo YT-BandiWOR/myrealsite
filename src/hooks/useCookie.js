@@ -24,11 +24,15 @@ function set(name, value, expirationSeconds) {
 }
 
 function getExpTime(jwt) {
-    console.log(jwtDecode(jwt));
-    let exp_time = jwtDecode(jwt).exp;
-    return Date.now() - exp_time;
+    let decoded_token = jwtDecode(jwt);
+    return decoded_token.exp - decoded_token.iat;
 }
 
-const functions = {set, get, getExpTime};
+function remove(cookieName) {
+    document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+}
+
+
+const functions = {set, get, remove, getExpTime};
 
 export default functions;

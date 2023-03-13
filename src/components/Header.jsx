@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import cls from './Header.module.scss'
 import {Link} from "react-router-dom";
-import BACKENDURLS from "../auth/BACKENDURLS";
+import BACKENDURLS from "../auth/BACKEND_ENDPOINTS";
 import request from "../scripts/request";
+import LoginLink from "./LoginLink";
 
 const MobileMenu = ({
     account=null,
@@ -33,7 +34,7 @@ const MobileMenu = ({
                         </div>
                     ) : (
                         <div className={cls.non_authorized}>
-                            <Link to="/login">{loginText}</Link>
+                            <LoginLink to="/login">{loginText}</LoginLink>
                         </div>
                     )
             }
@@ -50,7 +51,7 @@ const Header = ({
         ['О нас', '#/about'],
         ['Помощь', '#/help']
     ],
-    logoName='Saiwor',
+    logoName='Калдыбага',
     loginText='Войти',
     menuCaption='Меню'
 }) => {
@@ -68,8 +69,6 @@ const Header = ({
     }, [])
 
     useEffect(()=>{
-        console.log('data', response);
-
         if (response?.data?.username !== undefined && response?.data?.username !== null) {
             setAccount({name: response.data.username});
             setAuthorized(true);
@@ -79,7 +78,7 @@ const Header = ({
         }
     }, [response])
 
-    const menuToggle = (e) => {
+    const menuToggle = () => {
       setMenuOpened(!menuOpened);
     }
 
@@ -122,7 +121,7 @@ const Header = ({
                         </div>
                     ) : (
                         <div className={cls.non_authorized}>
-                            <Link to="/login">{loginText}</Link>
+                            <LoginLink to="/login">{loginText}</LoginLink>
                         </div>
                     )
             }

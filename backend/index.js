@@ -17,6 +17,7 @@ const REFRESH_TOKEN_SECRET = 'REFRESH_TOKEN_SECRET';
 const ACCESS_TOKEN_EXPIRATION = '30m';
 const REFRESH_TOKEN_EXPIRATION = 182 * 24 * 60 * 60;
 
+
 const db_run = util.promisify(db.run).bind(db);
 const db_get = util.promisify(db.get).bind(db);
 // const db_all = util.promisify(db.all).bind(db);
@@ -121,7 +122,14 @@ app.post('/me', async (req, res) => {
     const accessToken = authorizationHeader.split(' ')[1];
 
     try {
-        const decodedAccessToken = jwt.verify(accessToken, ACCESS_TOKEN_SECRET);
+        let decodedAccessToken;
+
+        try {
+            decodedAccessToken = jwt.verify(accessToken, ACCESS_TOKEN_SECRET);
+        } catch (error) {
+            console.error(error);
+            return res.status(401).json({error: 'Срок жизни токена доступа истёк.'})
+        }
 
         const user = await db_get(`SELECT username, email FROM users WHERE username = ? AND email = ? AND accessToken = ?`, [decodedAccessToken.username, decodedAccessToken.email, accessToken]);
         if (!user) {

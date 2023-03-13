@@ -1,9 +1,10 @@
 import axios from "axios";
-import BACKENDURLS from "../auth/BACKENDURLS";
+import BACKEND_ENDPOINTS from "../auth/BACKEND_ENDPOINTS";
 import useCookie from "../hooks/useCookie";
 import useStorage from "../hooks/useStorage";
 
-const refreshUrl = BACKENDURLS.url+BACKENDURLS.refreshToken;
+const refreshUrl = BACKEND_ENDPOINTS.url+BACKEND_ENDPOINTS.refreshToken;
+
 
 const getTokens = () => {
     return [useCookie.get('accessToken'), useStorage.get('refreshToken')];
@@ -33,7 +34,6 @@ const sendPostRequest = async (url, body, headers, [isLoaded, setIsLoaded], [res
         setIsLoaded(true);
 
     } catch (error) {
-        console.log(error)
         setIsLoaded(true);
         setError(error);
     }
@@ -50,7 +50,6 @@ const request = (
                 Authorization: `Bearer ${accessToken}`,
                 ..._headers
             }
-            console.log(headers);
 
             await sendPostRequest(url, body, headers,
                 [isLoaded, setIsLoaded],

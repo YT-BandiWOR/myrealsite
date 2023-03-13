@@ -28,6 +28,10 @@ function get(key) {
     return item.value;
 }
 
+function remove(key) {
+    localStorage.removeItem(key);
+}
 
-const functions = {get, set};
+
+const functions = {get, set, remove};
 export default functions;

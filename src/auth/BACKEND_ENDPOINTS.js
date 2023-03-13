@@ -1,4 +1,4 @@
-const ENDPOINTS = {
+const BACKEND_ENDPOINTS = {
     url: `http://localhost:3001`,
 
     register: `/register`,
@@ -7,4 +7,4 @@ const ENDPOINTS = {
     me: `/me`,
 }
 
-export default ENDPOINTS;
+export default BACKEND_ENDPOINTS;

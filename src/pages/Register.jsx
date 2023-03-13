@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import cls from './Page.module.scss'
 import {Link, Navigate} from "react-router-dom";
-import BACKENDURLS from "../auth/BACKENDURLS";
+import BACKENDURLS from "../auth/BACKEND_ENDPOINTS";
 import request from "../scripts/request";
 
 const Index = () => {
