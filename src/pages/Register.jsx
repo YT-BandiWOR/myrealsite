@@ -3,6 +3,9 @@ import cls from './Page.module.scss'
 import {Link, Navigate} from "react-router-dom";
 import BACKENDURLS from "../auth/BACKEND_ENDPOINTS";
 import request from "../scripts/request";
+import useCookie from "../hooks/useCookie";
+import cookieNames from "../constants/cookieNames";
+import GoLink from "../components/GoLink";
 
 const Index = () => {
     const placeholder_email = 'Введите почту';
@@ -55,14 +58,14 @@ const Index = () => {
 
     useEffect(()=>{
         if (regResponse.status === 201) {
-            setUsername('');
-            setPassword('');
-            setEmail('');
             setRegSuccess(true);
         }
     }, [regResponse])
 
     if (regSuccess) {
+        useCookie.set(cookieNames.registration_username, username, 5);
+        useCookie.set(cookieNames.registration_password, password, 5);
+
         return <Navigate to={"/login"}/>
     }
     else return (
@@ -92,7 +95,7 @@ const Index = () => {
             }
 
             <div className={cls.special_links}>
-                <Link to={'/login'} className={cls.other_action_btn}>{login_text}</Link>
+                <GoLink to={'/login'} className={cls.other_action_btn}>{login_text}</GoLink>
             </div>
         </div>
     );

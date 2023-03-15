@@ -2,12 +2,14 @@ import axios from "axios";
 import BACKEND_ENDPOINTS from "../auth/BACKEND_ENDPOINTS";
 import useCookie from "../hooks/useCookie";
 import useStorage from "../hooks/useStorage";
+import cookieNames from "../constants/cookieNames";
+import storageNames from "../constants/storageNames";
 
 const refreshUrl = BACKEND_ENDPOINTS.url+BACKEND_ENDPOINTS.refreshToken;
 
 
 const getTokens = () => {
-    return [useCookie.get('accessToken'), useStorage.get('refreshToken')];
+    return [useCookie.get(cookieNames.access_token), useStorage.get(storageNames.refresh_token)];
 }
 
 const getNewAccessToken = async (url, refresh, setError) => {
@@ -59,7 +61,7 @@ const request = (
         } else if (refreshToken != null) {
             const newAccessToken = await getNewAccessToken(refreshUrl, refreshToken, setError);
             const cookieExpTime = useCookie.getExpTime(newAccessToken);
-            useCookie.set('accessToken', newAccessToken, cookieExpTime);
+            useCookie.set(cookieNames.access_token, newAccessToken, cookieExpTime);
 
             const headers = {
                 Authorization: `Bearer ${newAccessToken}`,

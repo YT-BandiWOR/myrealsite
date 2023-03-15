@@ -2,6 +2,43 @@
 
 }
 
+.http_content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background: rgba(255,255,255,.02);
+  padding: 1rem;
+  border-radius: 5px;
+
+  .error {
+    color: red;
+    background: rgba(0,0,0,.3);
+    font-size: 3rem;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .description {
+    padding: 1rem;
+    color: rgba(255,255,255,.85);
+  }
+
+  .back_link {
+    color: rgba(255, 255, 255,.7);
+    text-decoration: none;
+    align-self: flex-end;
+    padding: .5rem;
+    margin: .5rem;
+    background: rgba(0,0,0,.2);
+    border-radius: 5px;
+
+    &:hover {
+      background: rgba(255,255,255,.1);
+    }
+  }
+}
+
 .auth_content {
   width: 90%;
   max-width: 700px;

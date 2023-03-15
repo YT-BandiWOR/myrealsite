@@ -6,6 +6,8 @@ import useCookie from "../hooks/useCookie";
 import useStorage from "../hooks/useStorage";
 import request from "../scripts/request";
 import cookieNames from "../constants/cookieNames";
+import storageNames from "../constants/storageNames";
+import GoLink from "../components/GoLink";
 
 
 const Index = () => {
@@ -32,10 +34,16 @@ const Index = () => {
     }
 
     useEffect(()=>{
-        const url_before_auth = useCookie.get(cookieNames.url_before_auth);
+        const url_before_auth = useCookie.pop(cookieNames.url_before_auth);
+        const registration_username = useCookie.pop(cookieNames.registration_username);
+        const registration_password = useCookie.pop(cookieNames.registration_password);
+
         if (url_before_auth) {
             setRedirectToAfterAuth(url_before_auth);
-            useCookie.remove(cookieNames.url_before_auth);
+        }
+        if (registration_username && registration_password) {
+            setUsername(registration_username);
+            setPassword(registration_password);
         }
     }, [])
 
@@ -43,8 +51,8 @@ const Index = () => {
         if (response.data) {
             const {accessToken, refreshToken} = response.data;
 
-            useCookie.set("accessToken", accessToken, useCookie.getExpTime(accessToken));
-            useStorage.set("refreshToken", refreshToken, useCookie.getExpTime(refreshToken));
+            useCookie.set(cookieNames.access_token, accessToken, useCookie.getExpTime(accessToken));
+            useStorage.set(storageNames.refresh_token, refreshToken, useCookie.getExpTime(refreshToken));
             setUsername('');
             setPassword('');
             setAuthOk(true);
@@ -77,7 +85,7 @@ const Index = () => {
                 )
             }
             <div className={cls.special_links}>
-                <Link to={'/register'} className={cls.other_action_btn}>{register_text}</Link>
+                <GoLink to={'/register'} className={cls.other_action_btn}>{register_text}</GoLink>
             </div>
         </div>
     )

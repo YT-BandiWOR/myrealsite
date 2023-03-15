@@ -1,6 +1,6 @@
 import React from 'react';
 import cls from './Footer.module.scss'
-import {Link} from "react-router-dom";
+import GoLink from "./GoLink";
 
 
 const Footer = ({
@@ -13,7 +13,7 @@ const Footer = ({
             <div className={cls.footer}>
                 <br/>
                 <p>{footerText}</p>
-                <Link to={'/more'}>{moreText}</Link>
+                <GoLink to={'/more'}>{moreText}</GoLink>
             </div>
         </>
     );

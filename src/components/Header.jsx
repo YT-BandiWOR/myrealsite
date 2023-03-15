@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import cls from './Header.module.scss'
-import {Link} from "react-router-dom";
 import BACKENDURLS from "../auth/BACKEND_ENDPOINTS";
 import request from "../scripts/request";
 import LoginLink from "./LoginLink";
+import GoLink from "./GoLink";
 
 const MobileMenu = ({
     account=null,
@@ -19,10 +19,10 @@ const MobileMenu = ({
         <div className={cls.mobile_menu}>
             {
                 elements.map((el, id)=>(
-                    <Link
+                    <GoLink
                         key={id}
                         to={el[1]}
-                    >{el[0]}</Link>
+                    >{el[0]}</GoLink>
                 ))
             }
             <br/>
@@ -30,7 +30,7 @@ const MobileMenu = ({
                 authorized?
                     (
                         <div className={cls.authorized}>
-                            <Link to="/account">{account.name}</Link>
+                            <GoLink to="/account">{account.name}</GoLink>
                         </div>
                     ) : (
                         <div className={cls.non_authorized}>
@@ -46,7 +46,7 @@ const MobileMenu = ({
 
 const Header = ({
     elements= [
-        ['Создать', '#/create'],
+        ['Создать', '/create'],
         ['Поиск', '#/search'],
         ['О нас', '#/about'],
         ['Помощь', '#/help']
@@ -86,7 +86,7 @@ const Header = ({
         return (
             <>
                 <header className={cls.header}>
-                    <Link to="/" className={cls.logo}>{logoName}</Link>
+                    <GoLink to="/" className={cls.logo}>{logoName}</GoLink>
                     <button
                         onClick={menuToggle}
                         className={cls.openMenu}
@@ -101,15 +101,15 @@ const Header = ({
         )
     else return (
         <header className={cls.header}>
-            <Link to="/" className={cls.logo}>{logoName}</Link>
+            <GoLink to="/" className={cls.logo}>{logoName}</GoLink>
             <div className={cls.links}>
             {
                 elements.map((el,id)=>(
-                    <Link
+                    <GoLink
                         className={cls.link}
                         key={id}
                         to={el[1]}
-                    >{el[0]}</Link>
+                    >{el[0]}</GoLink>
                 ))
             }
             </div>
@@ -117,7 +117,7 @@ const Header = ({
                 authorized?
                     (
                         <div className={cls.authorized}>
-                            <Link to="#">{account.name}</Link>
+                            <GoLink to="#">{account.name}</GoLink>
                         </div>
                     ) : (
                         <div className={cls.non_authorized}>
